@@ -3,7 +3,7 @@ services:
   text-generation-webui:
     build:
       context: .
-      dockerfile: Dockerfile-coolify
+      dockerfile: Dockerfile
     restart: unless-stopped
     ports:
       - "${PORT:-7860}:7860"
