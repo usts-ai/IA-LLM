@@ -1,0 +1,30 @@
+version: "3.8"
+services:
+  text-generation-webui:
+    build:
+      context: .
+      dockerfile: Dockerfile-coolify
+    restart: unless-stopped
+    ports:
+      - "${PORT:-7860}:7860"
+      - "${API_PORT:-5000}:5000"
+      - "${API_STREAM_PORT:-5005}:5005"
+    volumes:
+      - ./user_data/cache:/home/app/text-generation-webui/cache
+      - ./user_data/characters:/home/app/text-generation-webui/characters
+      - ./user_data/extensions:/home/app/text-generation-webui/extensions
+      - ./user_data/loras:/home/app/text-generation-webui/loras
+      - ./user_data/logs:/home/app/text-generation-webui/logs
+      - ./user_data/models:/home/app/text-generation-webui/models
+      - ./user_data/presets:/home/app/text-generation-webui/presets
+      - ./user_data/prompts:/home/app/text-generation-webui/prompts
+      - ./user_data/softprompts:/home/app/text-generation-webui/softprompts
+      - ./user_data/training:/home/app/text-generation-webui/training
+    environment:
+      - EXTRA_LAUNCH_ARGS=${EXTRA_LAUNCH_ARGS:-}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7860"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 90s
