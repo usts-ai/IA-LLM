@@ -21,14 +21,14 @@ services:
       - ./user_data/softprompts:/home/app/text-generation-webui/softprompts
       - ./user_data/training:/home/app/text-generation-webui/training
     environment:
-      - EXTRA_LAUNCH_ARGS=${EXTRA_LAUNCH_ARGS:-}
+      - EXTRA_LAUNCH_ARGS=${EXTRA_LAUNCH_ARGS:---gradio-auth admin:admin}
       - NVIDIA_VISIBLE_DEVICES=all
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:7860"]
+      test: ["CMD", "curl", "-f", "http://localhost:7860/api/v1/model"]
       interval: 30s
       timeout: 10s
-      retries: 3
-      start_period: 90s
+      retries: 5
+      start_period: 120s
     deploy:
       resources:
         reservations:

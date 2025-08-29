@@ -33,7 +33,7 @@ EXPOSE 7860 5000 5005
 # Create a startup script
 RUN echo '#!/bin/bash\n\
 cd /home/app/text-generation-webui\n\
-python3 server.py --listen --api $EXTRA_LAUNCH_ARGS\n\
+python3 server.py --listen --listen-host 0.0.0.0 --api $EXTRA_LAUNCH_ARGS\n\
 ' > /home/app/start.sh && chmod +x /home/app/start.sh
 
 # Set the entrypoint
