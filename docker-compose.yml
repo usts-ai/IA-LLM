@@ -22,9 +22,17 @@ services:
       - ./user_data/training:/home/app/text-generation-webui/training
     environment:
       - EXTRA_LAUNCH_ARGS=${EXTRA_LAUNCH_ARGS:-}
+      - NVIDIA_VISIBLE_DEVICES=all
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:7860"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 90s
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
